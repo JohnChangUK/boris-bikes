@@ -1,7 +1,14 @@
 require_relative 'bike'
 
 class DockingStation
-  attr_reader :bike
+  attr_reader :bike, :capacity
+
+  CAPACITY = 20
+
+  def initialize(capacity = CAPACITY)
+    @capacity = capacity
+    @bike = []
+  end
 
 
   def release_bike
@@ -11,11 +18,8 @@ class DockingStation
   # fail 'No Bikes Available' unless @bike
   # @bike
 
-if @bike == nil
-  raise 'No bikes left'
-else
-  @bike
-  end
+  raise 'No bikes left' if @bike.empty?
+  @bike.pop
 end
 
   def dock(bike)
@@ -25,10 +29,10 @@ end
     #we want station.release_bike to equal bike
     #In order to do this, we need to pass this bike in its current state to the release_bike method
     #Hence why we make the bike we created into an instance variable, so it can be accessed by released_bike method.
-    if @bike
+  if @bike.length >= 20
       raise 'Station is full'
     else
-    @bike = bike
+    @bike << bike
   end
 end
 
