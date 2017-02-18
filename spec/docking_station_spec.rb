@@ -3,9 +3,9 @@ require 'docking_station'
 
 describe DockingStation do
 
-  let(:bike) { Bike.new }
-  # let(:bike) { double :bike }
-  # let(:bike2) { double :bike }
+  let(:bike) { double :bike}
+  let(:bike2) { double :bike}
+
 
   it 'responds to release_bike' do
   expect(subject).to respond_to :release_bike
@@ -47,8 +47,8 @@ end
 
   describe '#dock' do
     it 'raises an error when full' do
-      subject.capacity.times { subject.dock Bike.new }
-      expect {subject.dock([Bike.new]) }.to raise_error 'Station is full'
+      subject.capacity.times { subject.dock "I'm a string, not a bike" }
+      expect {subject.dock([:bike]) }.to raise_error 'Station is full'
 end
 
   it 'adds a new bike to the end of the array' do
@@ -84,18 +84,21 @@ end
     expect { subject.pop_working_bike }.to raise_error 'No more working bikes'
   end
 
-  it 'testing that release_bike will return a working bike' do
-    bike = double(Bike.new)
-    bike2 = double(Bike.new)
+  it 'expects a new bike to respond to working and working to equal to true' do
     allow(bike).to receive(:working).and_return(true)
-    allow(bike2).to receive(:working).and_return(false)
-
-    subject.dock(bike)
-    subject.dock(bike)
-    subject.dock(bike2)
-    subject.dock(bike2)
-
-    expect(subject.broken_bikes.pop.working).to eq(false)
+    expect(bike).to respond_to(:working)
+    expect(bike.working).to eq(true)
   end
+  
+  # it 'testing that release_bike will return a working bike' do
+  #   bike = double(Bike.new)
+  #   bike2 = double(Bike.new)
+  #   allow(bike).to receive(:working).and_return(true)
+  #   allow(bike2).to receive(:working).and_return(false)
+  #
+  #   subject.dock(bike)
+  #   subject.dock(bike2)
+  #
+  # end
 
 end

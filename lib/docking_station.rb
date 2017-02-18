@@ -22,13 +22,13 @@ class DockingStation
 
   pop_working_bike
 
-  @bike_station.each do |bike|
-    if bike.working == true
-      @bike_station.delete(bike)
-    else
-  raise 'No working bikes'
-end
-end
+#   @bike_station.each do |bike|
+#     if bike.working == true
+#       @bike_station.delete(bike)
+#     else
+#   raise 'No working bikes'
+# end
+# end
 end
 
   def dock(bike)
@@ -44,23 +44,19 @@ end
 
   def broken_bikes
     broken_bikes = @bike_station.select { |bike| !bike.working }
-    delete_bikes = @bike_station.select { |bike| bike == false}
+    delete_bikes = @bike_station.delete_if { |bike| bike == false}
     broken_bikes
     delete_bikes
   end
 
-
   def pop_working_bike
-
-    working_bikes = @bike_station.select { |bike| bike.working == true}.pop
+    working_bikes = @bike_station.select { |bike| bike.working}.pop
     @bike_station.delete(working_bikes)
-
       raise 'No more working bikes' if !working_bikes
   end
 
+
 private
-
-
 
 def full?
   @bike_station.length >= CAPACITY
